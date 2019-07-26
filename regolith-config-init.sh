@@ -31,6 +31,23 @@ if [ -f ~/.Xresources-regolith ]; then
         xrdb -merge ~/.Xresources-regolith
 fi
 
+# Stage i3 config file
+REGOLITH_I3_CONFIG_FILE="$REGOLITH_I3_CONFIG_DIR/config"
+if [ ! -f $REGOLITH_I3_CONFIG_FILE ]; then
+        echo "Copying default Regolith i3 configuration to user directory."
+        mkdir -p $REGOLITH_I3_CONFIG_DIR
+        cp /etc/i3/config $REGOLITH_I3_CONFIG_FILE
+fi
+
+# Stage i3xrocks file
+REGOLITH_I3XROCKS_CONFIG_DIR="$HOME/.config/i3xrocks"
+REGOLITH_I3XROCKS_CONFIG_FILE="$REGOLITH_I3XROCKS_CONFIG_DIR/i3xrocks.conf"
+if [ ! -f $REGOLITH_I3XROCKS_CONFIG_FILE ]; then
+        echo "Copying default i3xrocks configuration to user directory."
+        mkdir -p $REGOLITH_I3XROCKS_CONFIG_DIR
+        cp /usr/share/i3xrocks/* $REGOLITH_I3XROCKS_CONFIG_DIR
+fi
+
 # The following stanza is to set Regolith-specific changes to default Ubuntu settings.
 if [ ! -f $UPDATE_FLAG_PATH ]; then
         echo "Executing regolith session configuration script for $PKG_VERSION."
@@ -54,20 +71,4 @@ if [ ! -f $UPDATE_FLAG_PATH ]; then
 
         # Only run this script once per package version per user login session.
         touch $UPDATE_FLAG_PATH
-fi
-
-# Stage i3 config file
-REGOLITH_I3_CONFIG_FILE="$REGOLITH_I3_CONFIG_DIR/config"
-if [ ! -f $REGOLITH_I3_CONFIG_FILE ]; then
-        echo "Copying default Regolith i3 configuration to user directory."
-        mkdir -p $REGOLITH_I3_CONFIG_DIR
-        cp /etc/i3/config $REGOLITH_I3_CONFIG_FILE
-fi
-
-# Stage i3xrocks file
-REGOLITH_I3XROCKS_CONFIG_DIR="$HOME/.config/i3xrocks"
-if [ ! -d $REGOLITH_I3XROCKS_CONFIG_DIR ]; then
-        echo "Copying default i3xrocks configuration to user directory."
-        mkdir -p $REGOLITH_I3XROCKS_CONFIG_DIR
-        cp /usr/share/i3xrocks/* REGOLITH_I3XROCKS_CONFIG_DIR
 fi

@@ -1,3 +1,9 @@
+regolith-scripts (1.1-1ubuntu1ppa1) bionic; urgency=medium
+
+  * Fixes to init and reset scripts. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Thu, 25 Jul 2019 19:07:46 -0700
+
 regolith-scripts (1.0-1ubuntu1ppa1) bionic; urgency=medium
 
   * Initial release 
