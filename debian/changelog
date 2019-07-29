@@ -1,3 +1,9 @@
+regolith-scripts (1.8-1ubuntu1ppa1) bionic; urgency=medium
+
+  * Fix bug with icon theme being set incorrectly. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Mon, 29 Jul 2019 07:03:52 -0700
+
 regolith-scripts (1.7-1ubuntu1ppa1) bionic; urgency=medium
 
   * Fix file path URI escape problem. 

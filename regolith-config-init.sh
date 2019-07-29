@@ -64,7 +64,7 @@ if [ "$UPDATE_POLICY" = true ] && [ ! -f $UPDATE_FLAG_PATH ]; then
         # Set the theme
         gsettings set org.gnome.desktop.interface gtk-theme "`xrescat gnome.gtk.theme SolArc-Dark`"
         gsettings set org.gnome.desktop.wm.preferences theme "`xrescat gnome.wm.theme SolArc-Dark`"
-        gsettings set org.gnome.desktop.interface icon-theme "`xrescat gnome.gtk.theme Arc`"
+        gsettings set org.gnome.desktop.interface icon-theme "`xrescat gnome.icon.theme Arc`"
 
         # Set the wallpaper
         gsettings set org.gnome.desktop.background picture-uri `xrescat gnome.wallpaper.uri "file:///usr/share/backgrounds/ESP_020528_1750_desktop.jpg"`
