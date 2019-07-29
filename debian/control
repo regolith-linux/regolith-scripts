@@ -8,5 +8,5 @@ Homepage: https://regolith-linux.org/
 
 Package: regolith-scripts
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, regolith-styles
 Description: Scripts for Regolith Linux

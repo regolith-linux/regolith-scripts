@@ -1,24 +1,8 @@
 #!/bin/bash
 
 REGOLITH_I3_CONFIG_DIR="$HOME/.config/i3-regolith"
-PKG_VERSION=`dpkg -s regolith-gnome-flashback | grep '^Version:' | awk '{print $2}'`
+PKG_VERSION=`dpkg -s regolith-styles | grep '^Version:' | awk '{print $2}'`
 UPDATE_FLAG_PATH="$REGOLITH_I3_CONFIG_DIR/config-flag-$PKG_VERSION"
-UPDATE_POLICY=`xrescat regolith.policy.update true`
-
-# If new version of regolith-gnome-flashback, stage Xresources.
-if [ "$UPDATE_POLICY" = true ] && [ ! -f $UPDATE_FLAG_PATH ]; then
-        if [ -f /usr/share/regolith-styles/root ]; then
-                if [ ! -f ~/.Xresources-regolith ]; then
-                        echo "Staging Regolith styles."
-                        cp /usr/share/regolith-styles/root ~/.Xresources-regolith
-                        if [ ! -d ~/.Xresources.d ]; then
-                                mkdir ~/.Xresources.d
-                        fi
-                        cp /usr/share/regolith-styles/* ~/.Xresources.d/
-                        rm ~/.Xresources.d/root
-                fi
-        fi
-fi
 
 # Load Xresources
 if [ -f ~/.Xresources ]; then
@@ -26,14 +10,29 @@ if [ -f ~/.Xresources ]; then
         xrdb -merge ~/.Xresources
 fi
 
-# Load Regolith Xresources
-if [ -f ~/.Xresources-regolith ]; then
+UPDATE_POLICY=`xrescat regolith.policy.update true`
+REGOLITH_XRES_ROOT="$HOME/.Xresources-regolith-$PKG_VERSION"
+
+# If new version of regolith-gnome-flashback, stage Xresources.
+if [ "$UPDATE_POLICY" = true ] && [ ! -f $UPDATE_FLAG_PATH ]; then
+        echo "Staging Regolith styles."
+        cp /usr/share/regolith-styles/root $REGOLITH_XRES_ROOT
+        if [ ! -d ~/.Xresources.d ]; then
+                mkdir ~/.Xresources.d
+        fi
+        cp /usr/share/regolith-styles/* ~/.Xresources.d/
+        rm ~/.Xresources.d/root
+fi
+
+# Reload Regolith Xresources
+if [ -f $REGOLITH_XRES_ROOT ]; then
         echo "Loading regolith Xresources."
-        xrdb -merge ~/.Xresources-regolith
+        xrdb -merge $REGOLITH_XRES_ROOT
 fi
 
 # Stage i3 config file
-REGOLITH_I3_CONFIG_FILE="$REGOLITH_I3_CONFIG_DIR/config"
+I3_PKG_VERSION=`dpkg -s regolith-i3-wm | grep '^Version:' | awk '{print $2}'`
+REGOLITH_I3_CONFIG_FILE="$REGOLITH_I3_CONFIG_DIR/config-$I3_PKG_VERSION"
 if [ "$UPDATE_POLICY" = true ] && [ ! -f $REGOLITH_I3_CONFIG_FILE ]; then
         echo "Copying default Regolith i3 configuration to user directory."
         mkdir -p $REGOLITH_I3_CONFIG_DIR
@@ -68,7 +67,7 @@ if [ "$UPDATE_POLICY" = true ] && [ ! -f $UPDATE_FLAG_PATH ]; then
         gsettings set org.gnome.desktop.interface icon-theme "`xrescat gnome.gtk.theme Arc`"
 
         # Set the wallpaper
-        gsettings set org.gnome.desktop.background picture-uri "`xrescat gnome.wallpaper.uri file:///usr/share/backgrounds/ESP_020528_1750_desktop.jpg`"
+        gsettings set org.gnome.desktop.background picture-uri `xrescat gnome.wallpaper.uri "file:///usr/share/backgrounds/ESP_020528_1750_desktop.jpg"`
 
         # Only run this script once per package version per user login session.
         touch $UPDATE_FLAG_PATH
