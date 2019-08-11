@@ -1,3 +1,9 @@
+regolith-scripts (1.9-1ubuntu1ppa1) disco; urgency=medium
+
+  * Update i3 config to optionally take config flag from i3 conf dir. 
+
+ -- Ken Gilmer <kgilmer@gmail.com>  Sat, 10 Aug 2019 22:28:22 -0700
+
 regolith-scripts (1.8-1ubuntu1ppa1) bionic; urgency=medium
 
   * Fix bug with icon theme being set incorrectly. 

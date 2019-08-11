@@ -10,3 +10,4 @@ Package: regolith-scripts
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, regolith-styles
 Description: Scripts for Regolith Linux
+ Provides scripts to load and manage Regolith configuration files.

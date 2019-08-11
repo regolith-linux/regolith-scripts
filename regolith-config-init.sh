@@ -31,7 +31,11 @@ if [ -f $REGOLITH_XRES_ROOT ]; then
 fi
 
 # Stage i3 config file
-I3_PKG_VERSION=`dpkg -s regolith-i3-wm | grep '^Version:' | awk '{print $2}'`
+if [ -f /etc/i3/config-version ]; then
+        I3_PKG_VERSION=`cat /etc/i3/config-version`
+else
+        I3_PKG_VERSION=`dpkg -s regolith-i3-wm | grep '^Version:' | awk '{print $2}'`
+fi
 REGOLITH_I3_CONFIG_FILE="$REGOLITH_I3_CONFIG_DIR/config-$I3_PKG_VERSION"
 if [ "$UPDATE_POLICY" = true ] && [ ! -f $REGOLITH_I3_CONFIG_FILE ]; then
         echo "Copying default Regolith i3 configuration to user directory."
